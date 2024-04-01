@@ -1,0 +1,46 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.calculator{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: azure;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+.selecao{
+  margin: 8px;
+  margin-left: 0;
+}
+input{ 
+  max-width: 250px;
+  width: 100%;
+  margin: 8px;
+  margin-left: 0;
+}
+button{
+  margin-bottom: 8px;
+}
+
+.result{
+  background-color: aqua;
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+tr{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}

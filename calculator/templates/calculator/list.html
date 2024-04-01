@@ -3,8 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+
+
 </head>
 <body>
+    <div class="calculator">
+        <h2>Calculadora</h2>
+        <form method="POST" action="{% url 'calculate' %}">
+            {% csrf_token %}
+            <input type="number" name="consumo" placeholder="Digite a primeira fatura" required>
+            <input type="number" name="consumo" placeholder="Digite a segunda fatura" required>
+            <input type="number" name="consumo" placeholder="Digite a terceira fatura" required>
+            <input type="number" name="distributor_tax" placeholder="tarifa" required>
+            <div class="selecao">
+                <select name="tax_type" id="tax_type" required>
+                    <option value="Comercial">Comercial</option>
+                    <option value="Residencial">Residencial</option>
+                    <option value="Industrial">Industrial</option>
+                </select>
+            </div>
+            <button type="submit">Calcular</button>
+        </form>
+        <div class="result">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Economia Anual</th>
+                        <th>Economia Mensal</th>
+                        <th>Desconto Aplicado</th>
+                        <th>Cobertura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consumer in consumers %}
+                    <tr>
+                        <td>{{ consumer.nome }}</td>
+                        <td>{{ consumer.annual_savings }}</td>
+                        <td>{{ consumer.monthly_savings }}</td>
+                        <td>{{ consumer.applied_discount }}</td>
+                        <td>{{ consumer.coverage }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 <!--
 TODO: You must display the data sent to the template in a table with the follow headers
  - Nome, Documento, Consumo, Tipo, Cobertura, Desconto, Economia

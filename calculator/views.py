@@ -1,17 +1,29 @@
 from django.shortcuts import render
-
-# TODO: Your list view should do the following tasks
-"""
--> Recover all consumers from the database
--> Get the discount value for each consumer
--> Calculate the economy
--> Send the data to the template that will be rendered
-"""
-
+from .models import Consumer
+from calculator_python import calculator
 
 def view1(request):
-    # Create the first view here.
-    pass
+    if request.method == "POST":
+        consumo = request.POST.get('consumo',[])
+        taxa = float(request.POST.get('taxa', 0))
+        tipo_tarifa = request.POST.get('tipo_tarifa', '')
+
+        consumers = Consumer.objects.all()
+
+        for consumer in consumers:
+            annual_savings, monthly_savings, applied_discount, coverage = calculator([consumo], taxa, tipo_tarifa)
+            
+            consumer.annual_savings = annual_savings
+            consumer.monthly_savings = monthly_savings
+            consumer.applied_discount = applied_discount
+            consumer.coverage = coverage
+            
+            consumer.save()
+
+        context = {'consumers': consumers}
+        return render(request, 'calculator/list.html', context)
+    else:
+        return render(request, 'calculator/list.html', {})
 
 
 # TODO: Your create view should do the following tasks
@@ -26,5 +38,26 @@ this page must be provided in the main page.
 
 
 def view2():
-    # Create the second view here.
+    if request.method == "POST":
+        consumo = request.POST.get('consumo',[])
+        taxa = float(request.POST.get('taxa', 0))
+        tipo_tarifa = request.POST.get('tipo_tarifa', '')
+
+        consumers = Consumer.objects.all()
+
+        for consumer in consumers:
+            annual_savings, monthly_savings, applied_discount, coverage = calculator([consumo], taxa, tipo_tarifa)
+            
+            consumer.annual_savings = annual_savings
+            consumer.monthly_savings = monthly_savings
+            consumer.applied_discount = applied_discount
+            consumer.coverage = coverage
+            
+            consumer.save()
+
+        context = {'consumers': consumers}
+        return render(request, 'calculator/list.html', context)
+    else:
+        return render(request, 'calculator/list.html', {})
     pass
+
